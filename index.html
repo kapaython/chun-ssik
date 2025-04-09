@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CS 챗봇</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white flex items-center justify-center min-h-screen">
+
+  <div class="text-center max-w-xl px-4 w-full">
+    <!-- 일러스트 아이콘 -->
+    <img src="https://dnvthl1py7y58.cloudfront.net/image.png" alt="AI 아이콘" class="w-20 mx-auto mb-6">
+
+    <!-- 설명 문장 -->
+    <p class="text-lg leading-relaxed mb-2">
+      안녕하세요. 우리팀 주변 춘씨익:)이에요. <br/>
+      사용자의 행동 로그, 정책을 분석하여 CS 원인을 파악하고 <br/>
+      추가 대응 여부와 개선점을 안내 해드릴 수 있어요.
+    </p>
+
+    <!-- 강조 문장 -->
+    <p class="font-semibold text-xl my-6">먼저 입력된 CS 내용을 알려주세요.</p>
+
+    <!-- 응답 출력 -->
+    <div id="response-box" class="text-left bg-gray-50 text-gray-800 rounded-md p-4 mb-4 hidden"></div>
+
+    <!-- 입력창 박스 -->
+    <div class="bg-gray-100 rounded-xl p-4 flex items-end">
+      <textarea 
+        id="cs-input"
+        rows="4" 
+        placeholder="CS 내용을 알려주시면 제가 한번 분석해볼게요."
+        class="w-full bg-transparent outline-none resize-none text-gray-700 placeholder-gray-400"
+      ></textarea>
+      <button id="send-btn" class="ml-2 p-2 text-white bg-blue-500 rounded-full hover:bg-blue-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10 14l2-2m0 0l2-2m-2 2V3m0 6a9 9 0 110 18 9 9 0 010-18z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = "https://uxfgyv3e99.execute-api.us-west-2.amazonaws.com/jack-test-1/jack-test"; // ← 너의 API Gateway 주소로 교체
+
+    const inputEl = document.getElementById("cs-input");
+    const btnEl = document.getElementById("send-btn");
+    const responseBox = document.getElementById("response-box");
+
+    btnEl.addEventListener("click", async () => {
+      const inputText = inputEl.value.trim();
+      if (!inputText) return;
+
+      responseBox.classList.remove("hidden");
+      responseBox.innerText = "🔍 분석 중입니다...";
+
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ input: inputText })
+        });
+
+        const data = await res.json();
+        responseBox.innerText = "🤖 " + data.answer;
+      } catch (err) {
+        responseBox.innerText = "⚠️ 에러가 발생했어요. 다시 시도해주세요.";
+        console.error(err);
+      }
+    });
+  </script>
+
+</body>
+</html>
+
