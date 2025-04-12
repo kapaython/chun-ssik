@@ -1,42 +1,27 @@
-console.log("Script loaded successfully!");
+console.log("Conversation script loaded successfully!");
 
 const API_URL = "https://uxfgyv3e99.execute-api.us-west-2.amazonaws.com/jack-test-1/jack-test";
-const startBtn = document.getElementById("start-btn");
-const chatInterface = document.getElementById("chat-interface");
 const chatContainer = document.getElementById("chat-container");
-const chatHeader = document.getElementById("chat-header");
-const initialScreen = document.getElementById("initial-screen");
-const description = document.getElementById("description");
-const emphasis = document.getElementById("emphasis");
-const buttonContainer = document.getElementById("button-container");
-const promptContainer = document.getElementById("prompt-container");
 const promptInput = document.getElementById("prompt-input");
 const sendBtn = document.getElementById("send-btn");
 
 // 로컬 스토리지 키
 const STORAGE_KEYS = {
-  CHAT_STATE: 'chatState',
   MESSAGES: 'chatMessages'
 };
 
 // 페이지 로드 시 상태 복원
 function restoreState() {
-  const chatState = localStorage.getItem(STORAGE_KEYS.CHAT_STATE);
   const messages = JSON.parse(localStorage.getItem(STORAGE_KEYS.MESSAGES) || '[]');
   
-  if (chatState === 'chat') {
-    initialScreen.classList.add('hidden');
-    chatInterface.classList.remove('hidden');
-    
-    // 저장된 메시지 복원
-    messages.forEach(msg => {
-      if (msg.type === 'user') {
-        addUserMessage(msg.content);
-      } else {
-        addAIMessage(msg.content);
-      }
-    });
-  }
+  // 저장된 메시지 복원
+  messages.forEach(msg => {
+    if (msg.type === 'user') {
+      addUserMessage(msg.content);
+    } else {
+      addAIMessage(msg.content);
+    }
+  });
 }
 
 // 메시지 저장
@@ -160,18 +145,11 @@ async function sendMessage() {
   chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
-startBtn.addEventListener("click", async () => {
-  // 초기 화면 숨기기
-  initialScreen.classList.add("hidden");
-
-  // 채팅 인터페이스 표시
-  chatInterface.classList.remove("hidden");
-  
-  // 상태 저장
-  localStorage.setItem(STORAGE_KEYS.CHAT_STATE, 'chat');
-
-  // 사용자 메시지 추가
+// 페이지 로드 시 초기 메시지 전송
+async function sendInitialMessage() {
   const initialMessage = "CS 확인 요청";
+  
+  // 사용자 메시지 추가
   addUserMessage(initialMessage);
   saveMessage('user', initialMessage);
 
@@ -195,10 +173,7 @@ startBtn.addEventListener("click", async () => {
     addAIMessage(data.answer);
     saveMessage('ai', data.answer);
   } catch (err) {
-    // 로딩 메시지 제거
     loadingMessage.remove();
-    
-    // 에러 메시지 추가
     const errorMessage = "⚠️ 에러가 발생했어요. 다시 시도해주세요.";
     addAIMessage(errorMessage);
     saveMessage('ai', errorMessage);
@@ -206,7 +181,16 @@ startBtn.addEventListener("click", async () => {
   }
 
   chatContainer.scrollTop = chatContainer.scrollHeight;
-});
+}
 
-// 페이지 로드 시 상태 복원
-document.addEventListener('DOMContentLoaded', restoreState);
+// 페이지 로드 시
+document.addEventListener('DOMContentLoaded', () => {
+  const messages = JSON.parse(localStorage.getItem(STORAGE_KEYS.MESSAGES) || '[]');
+  if (messages.length === 0) {
+    // 저장된 메시지가 없으면 초기 메시지 전송
+    sendInitialMessage();
+  } else {
+    // 저장된 메시지가 있으면 복원
+    restoreState();
+  }
+}); 
