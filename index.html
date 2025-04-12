@@ -47,6 +47,23 @@
         </div>
       </div>
     </div>
+
+    <!-- 프롬프트 입력창 -->
+    <div id="prompt-container" class="mt-4 hidden">
+      <div class="bg-white border border-gray-200 rounded-lg shadow-lg p-4">
+        <div class="flex items-center space-x-2">
+          <textarea id="prompt-input" 
+            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+            rows="1"
+            placeholder="메시지를 입력하세요..."
+          ></textarea>
+          <button id="send-btn" 
+            class="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex-shrink-0">
+            전송
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>

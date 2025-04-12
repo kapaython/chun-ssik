@@ -6,6 +6,9 @@ const chatContainer = document.getElementById("chat-container");
 const description = document.getElementById("description");
 const emphasis = document.getElementById("emphasis");
 const buttonContainer = document.getElementById("button-container");
+const promptContainer = document.getElementById("prompt-container");
+const promptInput = document.getElementById("prompt-input");
+const sendBtn = document.getElementById("send-btn");
 
 // 사용자 메시지 추가
 function addUserMessage(message) {
@@ -37,6 +40,7 @@ function addAIMessage(message) {
     </div>
   `;
   chatContainer.appendChild(messageDiv);
+  return messageDiv;
 }
 
 // 로딩 메시지 추가
@@ -55,14 +59,73 @@ function addLoadingMessage() {
   return messageDiv;
 }
 
+// 텍스트 영역 자동 높이 조절
+promptInput.addEventListener("input", function() {
+  this.style.height = "auto";
+  this.style.height = (this.scrollHeight) + "px";
+});
+
+// Enter 키로 전송 (Shift + Enter는 줄바꿈)
+promptInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+// 전송 버튼 클릭 시 메시지 전송
+sendBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  sendMessage();
+});
+
+async function sendMessage() {
+  const message = promptInput.value.trim();
+  if (!message) return;
+
+  // 입력창 초기화 (먼저 초기화하여 중복 전송 방지)
+  promptInput.value = "";
+  promptInput.style.height = "auto";
+
+  // 사용자 메시지 추가
+  addUserMessage(message);
+
+  // 로딩 메시지 추가
+  const loadingMessage = addLoadingMessage();
+  
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ input: message })
+    });
+
+    const data = await res.json();
+    
+    // 로딩 메시지 제거
+    loadingMessage.remove();
+    
+    // AI 응답 추가
+    addAIMessage(data.answer);
+  } catch (err) {
+    loadingMessage.remove();
+    addAIMessage("⚠️ 에러가 발생했어요. 다시 시도해주세요.");
+    console.error(err);
+  }
+  
+  // 스크롤을 최하단으로
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
 startBtn.addEventListener("click", async () => {
   // 기존 요소 숨기기
   description.classList.add("hidden");
   emphasis.classList.add("hidden");
   buttonContainer.classList.add("hidden");
 
-  // 대화 영역 표시
+  // 대화 영역과 프롬프트 입력창 표시
   chatContainer.classList.remove("hidden");
+  promptContainer.classList.remove("hidden");
 
   // 사용자 메시지 추가
   addUserMessage("CS 확인 요청");
