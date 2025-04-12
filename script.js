@@ -3,6 +3,7 @@ console.log("Script loaded successfully!");
 const API_URL = "https://uxfgyv3e99.execute-api.us-west-2.amazonaws.com/jack-test-1/jack-test";
 const startBtn = document.getElementById("start-btn");
 const chatContainer = document.getElementById("chat-container");
+const initialScreen = document.getElementById("initial-screen");
 const description = document.getElementById("description");
 const emphasis = document.getElementById("emphasis");
 const buttonContainer = document.getElementById("button-container");
@@ -118,14 +119,11 @@ async function sendMessage() {
 }
 
 startBtn.addEventListener("click", async () => {
-  // 기존 요소 숨기기
-  description.classList.add("hidden");
-  emphasis.classList.add("hidden");
-  buttonContainer.classList.add("hidden");
+  // 초기 화면 숨기기
+  initialScreen.classList.add("hidden");
 
   // 대화 영역과 프롬프트 입력창 표시
   chatContainer.classList.remove("hidden");
-  promptContainer.classList.remove("hidden");
 
   // 사용자 메시지 추가
   addUserMessage("CS 확인 요청");
