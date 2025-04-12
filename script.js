@@ -2,7 +2,9 @@ console.log("Script loaded successfully!");
 
 const API_URL = "https://uxfgyv3e99.execute-api.us-west-2.amazonaws.com/jack-test-1/jack-test";
 const startBtn = document.getElementById("start-btn");
+const chatInterface = document.getElementById("chat-interface");
 const chatContainer = document.getElementById("chat-container");
+const chatHeader = document.getElementById("chat-header");
 const initialScreen = document.getElementById("initial-screen");
 const description = document.getElementById("description");
 const emphasis = document.getElementById("emphasis");
@@ -25,13 +27,14 @@ function addUserMessage(message) {
       </div>
     </div>
   `;
-  chatContainer.appendChild(messageDiv);
+  const container = chatContainer.querySelector('.space-y-4');
+  container.appendChild(messageDiv);
 }
 
 // AI 메시지 추가
 function addAIMessage(message) {
   const messageDiv = document.createElement('div');
-  messageDiv.className = 'flex items-start space-x-2';
+  messageDiv.className = 'flex items-start space-x-3';
   messageDiv.innerHTML = `
     <div class="flex-shrink-0">
       <img src="https://dnvthl1py7y58.cloudfront.net/image.png" alt="AI 아이콘" class="w-8 h-8 rounded-full">
@@ -40,14 +43,15 @@ function addAIMessage(message) {
       <p class="text-gray-800">${message}</p>
     </div>
   `;
-  chatContainer.appendChild(messageDiv);
+  const container = chatContainer.querySelector('.space-y-4');
+  container.appendChild(messageDiv);
   return messageDiv;
 }
 
 // 로딩 메시지 추가
 function addLoadingMessage() {
   const messageDiv = document.createElement('div');
-  messageDiv.className = 'flex items-start space-x-2';
+  messageDiv.className = 'flex items-start space-x-3';
   messageDiv.innerHTML = `
     <div class="flex-shrink-0">
       <img src="https://dnvthl1py7y58.cloudfront.net/image.png" alt="AI 아이콘" class="w-8 h-8 rounded-full">
@@ -56,7 +60,8 @@ function addLoadingMessage() {
       <p class="text-gray-800">🔍 분석 중입니다...</p>
     </div>
   `;
-  chatContainer.appendChild(messageDiv);
+  const container = chatContainer.querySelector('.space-y-4');
+  container.appendChild(messageDiv);
   return messageDiv;
 }
 
@@ -122,8 +127,8 @@ startBtn.addEventListener("click", async () => {
   // 초기 화면 숨기기
   initialScreen.classList.add("hidden");
 
-  // 대화 영역과 프롬프트 입력창 표시
-  chatContainer.classList.remove("hidden");
+  // 채팅 인터페이스 표시
+  chatInterface.classList.remove("hidden");
 
   // 사용자 메시지 추가
   addUserMessage("CS 확인 요청");

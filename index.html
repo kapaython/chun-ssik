@@ -36,38 +36,50 @@
     </div>
   </div>
 
-  <!-- 대화 영역 -->
-  <div id="chat-container" class="hidden h-[calc(100vh-80px)] overflow-y-auto">
-    <div class="max-w-4xl mx-auto px-4">
-      <div class="space-y-4 pb-24">
-        <!-- 초기 안내 메시지 -->
-        <div class="flex items-start space-x-2">
-          <div class="flex-shrink-0">
-            <img src="https://dnvthl1py7y58.cloudfront.net/image.png" alt="AI 아이콘" class="w-8 h-8 rounded-full">
-          </div>
-          <div class="bg-gray-100 rounded-lg p-3 max-w-[80%]">
-            <p class="text-gray-800">
-              안녕하세요. CS 분석을 시작하겠습니다.
-            </p>
+  <!-- 채팅 인터페이스 -->
+  <div id="chat-interface" class="hidden h-screen flex flex-col">
+    <!-- 채팅 헤더 -->
+    <div id="chat-header" class="bg-white py-4 border-b border-gray-200">
+      <div class="max-w-xl mx-auto px-6">
+        <img src="https://dnvthl1py7y58.cloudfront.net/image.png" alt="AI 아이콘" class="w-12 mx-auto">
+      </div>
+    </div>
+
+    <!-- 대화 영역 -->
+    <div id="chat-container" class="flex-1 overflow-y-auto bg-gray-50">
+      <div class="mx-4 md:mx-8">
+        <div class="max-w-xl mx-auto px-6">
+          <div class="space-y-4 py-6 pb-24">
+            <!-- 초기 안내 메시지 -->
+            <div class="flex items-start space-x-3">
+              <div class="flex-shrink-0">
+                <img src="https://dnvthl1py7y58.cloudfront.net/image.png" alt="AI 아이콘" class="w-8 h-8 rounded-full">
+              </div>
+              <div class="bg-gray-100 rounded-lg p-3 max-w-[80%]">
+                <p class="text-gray-800">
+                  안녕하세요. CS 분석을 시작하겠습니다.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- 프롬프트 입력창 -->
-  <div id="prompt-container" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4">
-    <div class="max-w-4xl mx-auto">
-      <div class="flex items-center space-x-2">
-        <textarea id="prompt-input" 
-          class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-          rows="1"
-          placeholder="메시지를 입력하세요..."
-        ></textarea>
-        <button id="send-btn" 
-          class="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex-shrink-0">
-          전송
-        </button>
+    <!-- 프롬프트 입력창 -->
+    <div id="prompt-container" class="bg-white border-t border-gray-200 p-4">
+      <div class="max-w-xl mx-auto px-6">
+        <div class="flex items-center space-x-3">
+          <textarea id="prompt-input" 
+            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+            rows="1"
+            placeholder="메시지를 입력하세요..."
+          ></textarea>
+          <button id="send-btn" 
+            class="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex-shrink-0">
+            전송
+          </button>
+        </div>
       </div>
     </div>
   </div>
