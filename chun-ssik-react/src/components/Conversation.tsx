@@ -23,6 +23,7 @@ const Conversation: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const caseType = searchParams.get('case');
+  const initialMessage = searchParams.get('message');
 
   const caseTexts = {
     'transfer': '내용 : 4월 1일 13시에 김응수에게 3건 송금한 기록이 있는데, 저는 이런 송금을 한 기억이 없습니다.\npayId: 1001234',
@@ -33,12 +34,12 @@ const Conversation: React.FC = () => {
   useEffect(() => {
     // 저장된 메시지가 없으면 초기 메시지 전송
     const savedMessages = localStorage.getItem('chatMessages');
-    if (!savedMessages) {
+    if (!savedMessages && initialMessage) {
       sendInitialMessage();
-    } else {
+    } else if (savedMessages) {
       setMessages(JSON.parse(savedMessages));
     }
-  }, []);
+  }, [initialMessage]);
 
   useEffect(() => {
     // 메시지가 변경될 때마다 스크롤을 최하단으로
@@ -48,9 +49,6 @@ const Conversation: React.FC = () => {
   }, [messages]);
 
   const sendInitialMessage = async () => {
-    if (!caseType) return;
-
-    const initialMessage = caseTexts[caseType as keyof typeof caseTexts] || '';
     if (!initialMessage) return;
 
     // 사용자 메시지 추가

@@ -30,7 +30,7 @@ const Home: React.FC = () => {
         {/* 시작 버튼 */}
         <div>
           <button
-            onClick={() => navigate('/conversation')}
+            onClick={() => navigate('/conversation?message=4월 1일 13시에 김응수에게 송금된 거래가 있는데, 저는 그런 송금을 한 기억이 없습니다. (payAccountId: 1001234)')}
             className="inline-block w-[70%] px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-lg"
           >
             CS 확인
