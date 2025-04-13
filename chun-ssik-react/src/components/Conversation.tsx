@@ -58,19 +58,27 @@ const Conversation: React.FC = () => {
 
     setIsLoading(true);
     try {
+      console.log('초기 메시지 API 요청 시작:', { question: initialMessage });
       const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: initialMessage })
       });
 
+      console.log('초기 메시지 API 응답 상태:', res.status);
       const data = await res.json();
-      const decodedMessage = decodeUnicode(data.answer);
+      console.log('초기 메시지 API 응답 데이터:', data);
+
+      if (!res.ok) {
+        throw new Error(`API 응답 오류: ${res.status}`);
+      }
+
+      const decodedMessage = decodeUnicode(data.message);
       const updatedMessages: Message[] = [...newMessages, { type: 'ai' as const, content: decodedMessage }];
       setMessages(updatedMessages);
       saveMessages(updatedMessages);
     } catch (err) {
-      console.error(err);
+      console.error('초기 메시지 API 호출 중 에러 발생:', err);
       const errorMessage = "⚠️ 에러가 발생했어요. 다시 시도해주세요.";
       const updatedMessages: Message[] = [...newMessages, { type: 'ai' as const, content: errorMessage }];
       setMessages(updatedMessages);
@@ -94,19 +102,27 @@ const Conversation: React.FC = () => {
 
     setIsLoading(true);
     try {
+      console.log('API 요청 시작:', { question: input.trim() });
       const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: input.trim() })
       });
 
+      console.log('API 응답 상태:', res.status);
       const data = await res.json();
+      console.log('API 응답 데이터:', data);
+
+      if (!res.ok) {
+        throw new Error(`API 응답 오류: ${res.status}`);
+      }
+
       const decodedMessage = decodeUnicode(data.message);
       const updatedMessages: Message[] = [...newMessages, { type: 'ai' as const, content: decodedMessage }];
       setMessages(updatedMessages);
       saveMessages(updatedMessages);
     } catch (err) {
-      console.error(err);
+      console.error('API 호출 중 에러 발생:', err);
       const errorMessage = "⚠️ 에러가 발생했어요. 다시 시도해주세요.";
       const updatedMessages: Message[] = [...newMessages, { type: 'ai' as const, content: errorMessage }];
       setMessages(updatedMessages);
