@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const API_URL = "https://uxfgyv3e99.execute-api.us-west-2.amazonaws.com/jack-test-1/jack-test";
+const API_URL = "https://uxfgyv3e99.execute-api.us-west-2.amazonaws.com/jack-sagemaker/jack-sagemaker";
 
 interface Message {
   type: 'user' | 'ai';
@@ -56,7 +56,7 @@ const Conversation: React.FC = () => {
       const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input: initialMessage })
+        body: JSON.stringify({ question: initialMessage })
       });
 
       const data = await res.json();
@@ -91,7 +91,7 @@ const Conversation: React.FC = () => {
       const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input: input.trim() })
+        body: JSON.stringify({ question: input.trim() })
       });
 
       const data = await res.json();
@@ -123,39 +123,67 @@ const Conversation: React.FC = () => {
 
   return (
     <div className="bg-white h-[100dvh] flex flex-col overflow-hidden">
-      {/* 채팅 헤더 */}
-      <div className="bg-white py-4 border-b border-gray-200">
-        <div className="max-w-xl mx-auto px-6">
-          <img 
-            src="https://dnvthl1py7y58.cloudfront.net/image.png" 
-            alt="AI 아이콘" 
-            className="w-12 mx-auto cursor-pointer"
-            onClick={handleLogoClick}
-          />
-        </div>
-      </div>
-
-      {/* 케이스 정보 */}
-      <div className="bg-white p-4 border-b border-gray-200">
-        <div className="max-w-xl mx-auto px-6">
-          <p className="text-gray-700">{caseTexts[caseType as keyof typeof caseTexts] || ''}</p>
-        </div>
-      </div>
-
-      {/* 대화 영역 */}
-      <div 
-        ref={chatContainerRef}
-        className="flex-1 overflow-y-auto bg-gray-50"
-      >
-        <div className="mx-4 md:mx-8">
+      {/* 채팅 인터페이스 */}
+      <div className="h-full flex flex-col">
+        {/* 채팅 헤더 */}
+        <div className="bg-white py-4 border-b border-gray-200">
           <div className="max-w-xl mx-auto px-6">
-            <div className="space-y-4 py-6 pb-24">
-              {messages.map((message, index) => (
-                <div 
-                  key={index}
-                  className={`flex items-start ${message.type === 'user' ? 'justify-end' : ''} space-x-2`}
-                >
-                  {message.type === 'ai' && (
+            <img 
+              src="https://dnvthl1py7y58.cloudfront.net/image.png" 
+              alt="AI 아이콘" 
+              className="w-12 mx-auto cursor-pointer"
+              onClick={handleLogoClick}
+            />
+          </div>
+        </div>
+
+        {/* 케이스 정보 */}
+        <div className="bg-white p-4 border-b border-gray-200">
+          <div className="max-w-xl mx-auto px-6">
+            <p className="text-gray-700">{caseTexts[caseType as keyof typeof caseTexts] || ''}</p>
+          </div>
+        </div>
+
+        {/* 대화 영역 */}
+        <div 
+          ref={chatContainerRef}
+          className="flex-1 overflow-y-auto bg-gray-50"
+        >
+          <div className="mx-4 md:mx-8">
+            <div className="max-w-xl mx-auto px-6">
+              <div className="space-y-4 py-6 pb-24">
+                {messages.map((message, index) => (
+                  <div 
+                    key={index}
+                    className={`flex items-start ${message.type === 'user' ? 'justify-end' : ''} space-x-2`}
+                  >
+                    {message.type === 'ai' && (
+                      <div className="flex-shrink-0">
+                        <img 
+                          src="https://dnvthl1py7y58.cloudfront.net/image.png" 
+                          alt="AI 아이콘" 
+                          className="w-8 h-8 rounded-full"
+                        />
+                      </div>
+                    )}
+                    <div className={`rounded-lg p-3 max-w-[80%] ${
+                      message.type === 'user' 
+                        ? 'bg-blue-500 text-white' 
+                        : 'bg-gray-100 text-gray-800'
+                    }`}>
+                      <p>{message.content}</p>
+                    </div>
+                    {message.type === 'user' && (
+                      <div className="flex-shrink-0">
+                        <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
+                          <span>U</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+                {isLoading && (
+                  <div className="flex items-start space-x-3">
                     <div className="flex-shrink-0">
                       <img 
                         src="https://dnvthl1py7y58.cloudfront.net/image.png" 
@@ -163,61 +191,36 @@ const Conversation: React.FC = () => {
                         className="w-8 h-8 rounded-full"
                       />
                     </div>
-                  )}
-                  <div className={`rounded-lg p-3 max-w-[80%] ${
-                    message.type === 'user' 
-                      ? 'bg-blue-500 text-white' 
-                      : 'bg-gray-100 text-gray-800'
-                  }`}>
-                    <p>{message.content}</p>
-                  </div>
-                  {message.type === 'user' && (
-                    <div className="flex-shrink-0">
-                      <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
-                        <span>U</span>
-                      </div>
+                    <div className="bg-gray-100 rounded-lg p-3 max-w-[80%]">
+                      <p className="text-gray-800">🔍 분석 중입니다...</p>
                     </div>
-                  )}
-                </div>
-              ))}
-              {isLoading && (
-                <div className="flex items-start space-x-3">
-                  <div className="flex-shrink-0">
-                    <img 
-                      src="https://dnvthl1py7y58.cloudfront.net/image.png" 
-                      alt="AI 아이콘" 
-                      className="w-8 h-8 rounded-full"
-                    />
                   </div>
-                  <div className="bg-gray-100 rounded-lg p-3 max-w-[80%]">
-                    <p className="text-gray-800">🔍 분석 중입니다...</p>
-                  </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* 입력 영역 */}
-      <div className="bg-white border-t border-gray-200 p-4">
-        <div className="max-w-xl mx-auto px-6">
-          <div className="flex items-center space-x-3">
-            <textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-              rows={1}
-              placeholder="메시지를 입력하세요..."
-            />
-            <button
-              onClick={handleSendMessage}
-              disabled={isLoading}
-              className="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex-shrink-0 disabled:opacity-50"
-            >
-              전송
-            </button>
+        {/* 프롬프트 입력창 */}
+        <div className="bg-white border-t border-gray-200 p-4">
+          <div className="max-w-xl mx-auto px-6">
+            <div className="flex items-center space-x-3">
+              <textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                rows={1}
+                placeholder="메시지를 입력하세요..."
+              />
+              <button
+                onClick={handleSendMessage}
+                disabled={isLoading}
+                className="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex-shrink-0 disabled:opacity-50"
+              >
+                전송
+              </button>
+            </div>
           </div>
         </div>
       </div>
