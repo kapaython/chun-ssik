@@ -3,6 +3,13 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const API_URL = "https://uxfgyv3e99.execute-api.us-west-2.amazonaws.com/jack-sagemaker/jack-sagemaker";
 
+// 유니코드 이스케이프 시퀀스를 디코딩하는 함수
+const decodeUnicode = (str: string): string => {
+  return str.replace(/\\u([\d\w]{4})/gi, (match, grp) => {
+    return String.fromCharCode(parseInt(grp, 16));
+  });
+};
+
 interface Message {
   type: 'user' | 'ai';
   content: string;
@@ -60,7 +67,8 @@ const Conversation: React.FC = () => {
       });
 
       const data = await res.json();
-      const updatedMessages: Message[] = [...newMessages, { type: 'ai' as const, content: data.answer }];
+      const decodedMessage = decodeUnicode(data.answer);
+      const updatedMessages: Message[] = [...newMessages, { type: 'ai' as const, content: decodedMessage }];
       setMessages(updatedMessages);
       saveMessages(updatedMessages);
     } catch (err) {
@@ -95,7 +103,8 @@ const Conversation: React.FC = () => {
       });
 
       const data = await res.json();
-      const updatedMessages: Message[] = [...newMessages, { type: 'ai' as const, content: data.answer }];
+      const decodedMessage = decodeUnicode(data.message);
+      const updatedMessages: Message[] = [...newMessages, { type: 'ai' as const, content: decodedMessage }];
       setMessages(updatedMessages);
       saveMessages(updatedMessages);
     } catch (err) {
