@@ -224,6 +224,17 @@ const Conversation02: React.FC = () => {
           </div>
         </div>
 
+        {/* CS 리포트 버튼 */}
+        {messages.length >= 2 && (
+          <div className="bg-white py-4">
+            <div className="max-w-xl mx-auto px-6">
+              <button className="bg-[#6B7AED] text-white px-4 py-1.5 rounded-full text-sm w-[30%] border border-[#6B7AED]">
+                CS 리포트 확인할래요
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* 프롬프트 입력창 */}
         <div className="bg-white border-t border-gray-200 p-4">
           <div className="max-w-xl mx-auto px-6">
@@ -239,7 +250,7 @@ const Conversation02: React.FC = () => {
               <button
                 onClick={handleSendMessage}
                 disabled={isLoading}
-                className="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex-shrink-0 disabled:opacity-50"
+                className="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex-shrink-0 disabled:opacity-50 border border-blue-600"
               >
                 전송
               </button>
