@@ -41,40 +41,6 @@ const Home: React.FC = () => {
               </button>
             </div>
           </div>
-          <div className="w-full max-w-2xl bg-gray-50 rounded-xl p-6">
-            <div className="flex justify-between items-center">
-              <div className="flex items-start">
-                <div className="ml-2">
-                  <p className="font-semibold text-gray-800 mt-1">내용</p>  
-                  <p className="font-semiboldtext-gray-800 mt-1">제가 진행하지 않은 2024년 4월 5일 8시 이*지 1,000,000원이 신한은행 계좌로송금 되었어요.</p>
-                  <p className="font-semibold text-gray-600">페이어카 : 43214321</p>
-                </div>      
-              </div>
-              <button
-                onClick={() => navigate('/conversation02')}
-                className="bg-[#6B7AED] text-white px-8 py-2 rounded-full hover:bg-blue-600 transition-colors text-sm flex-shrink-0 ml-4 self-center border border-[#6B7AED]"
-              >
-                해결하기
-              </button>
-            </div>
-          </div>
-          <div className="w-full max-w-2xl bg-gray-50 rounded-xl p-6">
-            <div className="flex justify-between items-center">
-              <div className="flex items-start">
-                <div className="ml-2">
-                  <p className="font-semibold text-gray-800 mt-1">내용</p>  
-                  <p className="font-semiboldtext-gray-800 mt-1">2024년 12월 29일 카카오페이로 제 국민은행 계좌로 10만원이 송금되었는데, 저는 송금한적이 없어요. 이거 해킹 된건가요?</p>
-                  <p className="font-semibold text-gray-600">페이어카 : 11112222</p>
-                </div>
-              </div>
-              <button
-                onClick={() => navigate('/conversation03')}
-                className="bg-[#6B7AED] text-white px-8 py-2 rounded-full hover:bg-blue-600 transition-colors text-sm flex-shrink-0 ml-4 self-center border border-[#6B7AED]"
-              >
-                해결하기
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
