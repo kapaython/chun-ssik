@@ -23,7 +23,7 @@ const Conversation01: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const caseType = searchParams.get('case');
-  const initialMessage = '💌 미인지 송금 확인 요청\n\n - 페이어카 : 1001234\n- 문의 일시 : 2025-04-01 14:11:30\n- 고객문의 : 4월 1일 13시에 김응수에게 송금된 거래가 있는데, 저는 그런 송금을 한 기억이 없습니다.'
+  const initialMessage = '💌 미인지 송금 확인 요청\n\n - 페이어카 : 1001234\n- 고객문의 : 2024년 4월 1일 13시에 김응수에게 송금된 거래가 있는데, 저는 그런 송금을 한 기억이 없습니다.'
 
   const caseTexts = {
     'transfer': '내용 : 4월 1일 13시에 김응수에게 3건 송금한 기록이 있는데, 저는 이런 송금을 한 기억이 없습니다.\npayId: 1001234',
