@@ -185,7 +185,7 @@ const Conversation: React.FC = () => {
                         <img 
                           src="https://dnvthl1py7y58.cloudfront.net/image.png" 
                           alt="AI 아이콘" 
-                          className="w-8 h-8 rounded-full"
+                          className="w-8 h-8 object-cover rounded-full"
                         />
                       </div>
                     )}
@@ -211,7 +211,7 @@ const Conversation: React.FC = () => {
                       <img 
                         src="https://dnvthl1py7y58.cloudfront.net/image.png" 
                         alt="AI 아이콘" 
-                        className="w-8 h-8 rounded-full"
+                        className="w-8 h-8 object-cover rounded-full"
                       />
                     </div>
                     <div className="bg-gray-100 rounded-lg p-3 max-w-[80%]">
