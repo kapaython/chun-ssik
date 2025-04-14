@@ -147,8 +147,10 @@ const Conversation01: React.FC = () => {
 
   const handleConfirmClick = async () => {
     setIsLoading(true);
+    const API_URL2 = "https://uxfgyv3e99.execute-api.us-west-2.amazonaws.com/cs-report/cs-report";
+
     try {
-      const res = await fetch("https://uxfgyv3e99.execute-api.us-west-2.amazonaws.com/jack-test-1/jack-test/cs-report", {
+      const res = await fetch(API_URL2, {
         method: "GET",
         headers: { "Content-Type": "application/json" }
       });
@@ -156,24 +158,15 @@ const Conversation01: React.FC = () => {
       console.log('CS 리포트 API 응답 상태:', res.status);
       console.log('CS 리포트 API 응답 헤더:', res.headers);
       
-      const text = await res.text();
+      const text = await res.json();
       console.log('CS 리포트 API 응답 텍스트:', text);
-      
-      let data;
-      try {
-        data = JSON.parse(text);
-      } catch (e) {
-        console.error('JSON 파싱 에러:', e);
-        throw new Error('응답 데이터가 JSON 형식이 아닙니다.');
-      }
-      
-      console.log('CS 리포트 API 응답 데이터:', data);
+      console.log('CS 리포트 API 응답 데이터:', text);
 
       if (!res.ok) {
         throw new Error(`API 응답 오류: ${res.status}`);
       }
 
-      const decodedMessage = decodeUnicode(data.message);
+      const decodedMessage = decodeUnicode(text.message);
       const updatedMessages: Message[] = [...messages, { type: 'ai' as const, content: decodedMessage }];
       setMessages(updatedMessages);
       saveMessages(updatedMessages);
