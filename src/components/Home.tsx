@@ -19,7 +19,7 @@ const Home: React.FC = () => {
           <p className="text-lg leading-relaxed mb-2">
             고객센터에서 아래 고객문의가 인입되었어요 🕊️
           </p>
-          <p className="font-semibold text-xl my-6"> 💌 본인이 인지하지 못한 송금 문의 ・ 3건</p>
+          <p className="font-semibold text-xl my-6"> 💌 본인이 인지하지 못한 송금 문의 ・ 1건</p>
         </div>
 
         {/* 시작 버튼들 */}
@@ -29,7 +29,7 @@ const Home: React.FC = () => {
               <div className="flex items-start">
                 <div className="ml-2">
                   <p className="font-semibold text-gray-800 mt-1">내용</p>  
-                  <p className="font-semiboldtext-gray-800 mt-1">2024년 4월 1일 13시에 김응수에게 3건 송금한 기록이 있는데, 저는 이런 송금을 한 기억이 없습니다.</p>
+                  <p className="font-semiboldtext-gray-800 mt-1">2025-02-23 09:38에 김응수에게 1건 송금한 기록이 있는데, 저는 이런 송금을 한 기억이 없습니다.</p>
                   <p className="font-semibold text-gray-600">페이어카 : 10001234</p>
                 </div>
               </div>

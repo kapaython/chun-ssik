@@ -25,8 +25,7 @@ const Conversation01: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const caseType = searchParams.get('case');
-  const initialMessage = '💌 미인지 송금 확인 요청\n\n - 페이어카 : 1001234\n- 고객문의 : 2024년 4월 1일 13시에 김응수에게 송금된 거래가 있는데, 저는 그런 송금을 한 기억이 없습니다.'
-
+  const initialMessage = '💌 본인이 인지하지 못한 송금 확인 요청\n\n내용 : 2025-02-23 09:38에 김응수에게 1건 송금한 기록이 있는데, 저는 이런 송금을 한 기억이 없습니다.\n페이어카: 1001234';
   const caseTexts = {
     'transfer': '내용 : 4월 1일 13시에 김응수에게 3건 송금한 기록이 있는데, 저는 이런 송금을 한 기억이 없습니다.\npayId: 1001234',
     'balance': '내용 : 제가 진행하지 않은 5월 5일 8시 이*지 1,000,000원이 신한은행 계좌로송금 되었어요.\npayId: 43214321',
