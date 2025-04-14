@@ -240,15 +240,15 @@ const Conversation01: React.FC = () => {
                           ? 'bg-blue-500 text-white' 
                           : 'bg-gray-100 text-gray-800'
                       }`}>
-                        <div className="whitespace-pre-line [&_p]:my-0 [&_ul]:my-0 [&_li]:my-0 [&_a]:text-blue-600 [&_a]:underline [&_code]:bg-gray-100 [&_code]:px-1 [&_code]:rounded [&_pre]:bg-gray-100 [&_pre]:p-2 [&_pre]:rounded [&_pre]:overflow-auto [&_pre]:max-h-[400px] [&_pre]:max-w-[600px] [&_pre_code]:whitespace-pre [&_table]:border-collapse [&_table]:max-h-[400px] [&_table]:max-w-[600px] [&_td]:border [&_td]:p-1 [&_th]:border [&_th]:p-1">
+                        <div className="whitespace-pre-line [&_p]:my-0 [&_ul]:my-0 [&_li]:my-0 [&_a]:text-blue-600 [&_a]:underline [&_code]:bg-gray-100 [&_code]:px-1 [&_code]:rounded [&_code]:text-blue-600 [&_pre]:bg-gray-100 [&_pre]:p-2 [&_pre]:rounded [&_pre]:overflow-auto [&_pre]:max-h-[400px] [&_pre]:max-w-[600px] [&_pre_code]:whitespace-pre [&_pre_code]:text-blue-600 [&_table]:border-collapse [&_table]:max-h-[400px] [&_table]:max-w-[600px] [&_td]:border [&_td]:p-2 [&_th]:border [&_th]:p-2 [&_th]:bg-gray-50 [&_tr]:hover:bg-gray-50 [&_td]:min-w-[100px] [&_th]:min-w-[100px] [&_td]:whitespace-normal [&_th]:whitespace-normal [&_td]:break-words [&_th]:break-words [&_td]:text-blue-600 [&_th]:text-blue-700">
                           <ReactMarkdown 
                             remarkPlugins={[remarkGfm]}
                             components={{
                               a: ({...props}) => <a target="_blank" rel="noopener noreferrer" {...props} />,
                               pre: ({...props}) => <pre {...props} />,
                               table: ({...props}) => (
-                                <div className="overflow-auto max-h-[400px] max-w-[600px]">
-                                  <table {...props} />
+                                <div className="overflow-auto max-h-[400px] max-w-[600px] rounded border">
+                                  <table className="w-full bg-white" {...props} />
                                 </div>
                               )
                             }}
