@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const API_URL = "https://uxfgyv3e99.execute-api.us-west-2.amazonaws.com/jack-sagemaker/jack-sagemaker";
 
@@ -238,7 +240,22 @@ const Conversation01: React.FC = () => {
                           ? 'bg-blue-500 text-white' 
                           : 'bg-gray-100 text-gray-800'
                       }`}>
-                        <p className="whitespace-pre-line">{message.content}</p>
+                        <div className="whitespace-pre-line [&_p]:my-0 [&_ul]:my-0 [&_li]:my-0 [&_a]:text-blue-600 [&_a]:underline [&_code]:bg-gray-100 [&_code]:px-1 [&_code]:rounded [&_pre]:bg-gray-100 [&_pre]:p-2 [&_pre]:rounded [&_pre]:overflow-auto [&_pre]:max-h-[400px] [&_pre]:max-w-[600px] [&_pre_code]:whitespace-pre [&_table]:border-collapse [&_table]:max-h-[400px] [&_table]:max-w-[600px] [&_td]:border [&_td]:p-1 [&_th]:border [&_th]:p-1">
+                          <ReactMarkdown 
+                            remarkPlugins={[remarkGfm]}
+                            components={{
+                              a: ({...props}) => <a target="_blank" rel="noopener noreferrer" {...props} />,
+                              pre: ({...props}) => <pre {...props} />,
+                              table: ({...props}) => (
+                                <div className="overflow-auto max-h-[400px] max-w-[600px]">
+                                  <table {...props} />
+                                </div>
+                              )
+                            }}
+                          >
+                            {message.content}
+                          </ReactMarkdown>
+                        </div>
                       </div>
                       {message.type === 'ai' && 
                        index === messages.length - 1 && (
