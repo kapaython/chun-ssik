@@ -150,11 +150,11 @@ const Conversation03: React.FC = () => {
       <div className="h-full flex flex-col">
         {/* 채팅 헤더 */}
         <div className="bg-white py-4 border-b border-gray-200">
-          <div className="max-w-xl mx-auto px-6">
+          <div className="max-w-xl mx-auto px-6 flex justify-center">
             <img 
               src="https://dnvthl1py7y58.cloudfront.net/image.png" 
               alt="AI 아이콘" 
-              className="w-12 mx-auto cursor-pointer"
+              className="w-12 cursor-pointer"
               onClick={handleLogoClick}
             />
           </div>

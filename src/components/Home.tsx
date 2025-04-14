@@ -31,21 +31,21 @@ const Home: React.FC = () => {
         <div className="flex flex-col gap-4 items-center">
           <button
             onClick={() => navigate('/conversation01')}
-            className="w-[70%] px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-lg"
+            className="w-[70%] px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-lg border border-blue-600"
           >
-            CS 케이스 1: 의심스러운 송금
+            💌 미인지 송금 확인 요청 케이스 1
           </button>
           <button
             onClick={() => navigate('/conversation02')}
-            className="w-[70%] px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-lg"
+            className="w-[70%] px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-lg border border-blue-600"
           >
-            CS 케이스 2: 카드 결제 오류
+            💌 미인지 송금 확인 요청 케이스 2
           </button>
           <button
             onClick={() => navigate('/conversation03')}
-            className="w-[70%] px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-lg"
+            className="w-[70%] px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-lg border border-blue-600"
           >
-            CS 케이스 3: 계좌 이체 실패
+            💌 미인지 송금 확인 요청 케이스 3
           </button>
         </div>
       </div>
