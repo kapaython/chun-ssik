@@ -51,7 +51,7 @@ const Home: React.FC = () => {
                 </div>      
               </div>
               <button
-                onClick={() => navigate('/conversation03')}
+                onClick={() => navigate('/conversation02')}
                 className="bg-[#6B7AED] text-white px-8 py-2 rounded-full hover:bg-blue-600 transition-colors text-sm flex-shrink-0 ml-4 self-center border border-[#6B7AED]"
               >
                 해결하기
@@ -68,7 +68,7 @@ const Home: React.FC = () => {
                 </div>
               </div>
               <button
-                onClick={() => navigate('/conversation02')}
+                onClick={() => navigate('/conversation03')}
                 className="bg-[#6B7AED] text-white px-8 py-2 rounded-full hover:bg-blue-600 transition-colors text-sm flex-shrink-0 ml-4 self-center border border-[#6B7AED]"
               >
                 해결하기

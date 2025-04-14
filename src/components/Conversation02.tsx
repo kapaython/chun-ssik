@@ -11,7 +11,7 @@ const decodeUnicode = (str: string): string => {
 };
 
 interface Message {
-  type: 'user' | 'ai';
+  type: 'user' | 'ai' | 'system';
   content: string;
 }
 
@@ -19,11 +19,14 @@ const Conversation02: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isInputDisabled, setIsInputDisabled] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [isGeneratingReport, setIsGeneratingReport] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const caseType = searchParams.get('case');
-  const initialMessage = '💌 미인지 송금 확인 요청\n\n- 페이어카 : 43214321\n- 고객문의 : 제가 진행하지 않은 2024년 4월 5일 8시 이*지 1,000,000원이 신한은행 계좌로송금 되었어요.'
+  const initialMessage = '💌 본인이 인지하지 못한 송금 확인 요청\n\n내용\n- 제가 진행하지 않은 2024년 4월 5일 8시 이*지 1,000,000원이 신한은행 계좌로송금 되었어요.\n- 페이어카 : 43214321'
 
   const caseTexts = {
     'transfer': '내용 : 4월 1일 13시에 김응수에게 3건 송금한 기록이 있는데, 저는 이런 송금을 한 기억이 없습니다.\npayId: 1001234',
@@ -144,6 +147,44 @@ const Conversation02: React.FC = () => {
     navigate('/');
   };
 
+  const handleConfirmClick = async () => {
+    setIsInputDisabled(true);
+    setIsConfirmed(true);
+    
+    const completionMessage = {
+      type: 'system' as const,
+      content: 'CS가 완료되었습니다.'
+    };
+    setMessages([...messages, completionMessage]);
+
+    setTimeout(async () => {
+      setIsGeneratingReport(true);
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ input: "CS리포트 작성해줘" })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(`API 응답 오류: ${res.status}`);
+
+        const decodedMessage = decodeUnicode(data.message);
+        const updatedMessages = [...messages, completionMessage, { type: 'ai' as const, content: decodedMessage }];
+        setMessages(updatedMessages);
+        saveMessages(updatedMessages);
+      } catch (err) {
+        console.error('API 호출 중 에러 발생:', err);
+        const errorMessage = "⚠️ 에러가 발생했어요. 다시 시도해주세요.";
+        const updatedMessages = [...messages, completionMessage, { type: 'ai' as const, content: errorMessage }];
+        setMessages(updatedMessages);
+        saveMessages(updatedMessages);
+      } finally {
+        setIsGeneratingReport(false);
+      }
+    }, 1000);
+  };
+
   return (
     <div className="bg-white h-[100dvh] flex flex-col overflow-hidden">
       {/* 채팅 인터페이스 */}
@@ -178,7 +219,7 @@ const Conversation02: React.FC = () => {
                 {messages.map((message, index) => (
                   <div 
                     key={index}
-                    className={`flex items-start ${message.type === 'user' ? 'justify-end' : ''} space-x-2`}
+                    className={`flex items-start ${message.type === 'user' ? 'justify-end' : message.type === 'system' ? 'justify-center' : ''} space-x-2`}
                   >
                     {message.type === 'ai' && (
                       <div className="flex-shrink-0">
@@ -190,18 +231,25 @@ const Conversation02: React.FC = () => {
                       </div>
                     )}
                     <div>
-                      <div className={`rounded-lg p-3 max-w-[80%] ${
+                      <div className={`rounded-lg p-3 ${
                         message.type === 'user' 
-                          ? 'bg-blue-500 text-white' 
-                          : 'bg-gray-100 text-gray-800'
+                          ? 'bg-blue-500 text-white max-w-[80%]' 
+                          : message.type === 'system'
+                          ? 'text-gray-600 text-sm px-4'
+                          : 'bg-gray-100 text-gray-800 max-w-[80%]'
                       }`}>
                         <p className="whitespace-pre-line">{message.content}</p>
                       </div>
                       {message.type === 'ai' && 
-                       index === messages.length - 1 && (
+                       index === messages.length - 1 && 
+                       !isConfirmed && (
                         <div className="mt-2 ml-1 flex items-center space-x-2">
                           <p className="text-sm text-gray-600">CS가 해결되었나요?</p>
-                          <button className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm hover:bg-blue-600 transition-colors border border-blue-600">
+                          <button 
+                            className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm hover:bg-blue-600 transition-colors border border-blue-600 disabled:opacity-50 disabled:hover:bg-blue-500 disabled:cursor-not-allowed"
+                            onClick={handleConfirmClick}
+                            disabled={isConfirmed}
+                          >
                             네
                           </button>
                         </div>
@@ -216,7 +264,7 @@ const Conversation02: React.FC = () => {
                     )}
                   </div>
                 ))}
-                {isLoading && (
+                {isLoading && !isGeneratingReport && (
                   <div className="flex items-start space-x-3">
                     <div className="flex-shrink-0">
                       <img 
@@ -227,6 +275,20 @@ const Conversation02: React.FC = () => {
                     </div>
                     <div className="bg-gray-100 rounded-lg p-3 max-w-[80%]">
                       <p className="text-gray-800">🔍 분석 중입니다...</p>
+                    </div>
+                  </div>
+                )}
+                {isGeneratingReport && (
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0">
+                      <img 
+                        src="https://dnvthl1py7y58.cloudfront.net/image.png" 
+                        alt="AI 아이콘" 
+                        className="w-8 h-8 object-contain rounded-full"
+                      />
+                    </div>
+                    <div className="bg-gray-100 rounded-lg p-3 max-w-[80%]">
+                      <p className="text-gray-800">🔍 CS 리포트 작성중입니다...</p>
                     </div>
                   </div>
                 )}
@@ -243,13 +305,14 @@ const Conversation02: React.FC = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none disabled:bg-gray-100 disabled:cursor-not-allowed"
                 rows={1}
                 placeholder="메시지를 입력하세요..."
+                disabled={isInputDisabled}
               />
               <button
                 onClick={handleSendMessage}
-                disabled={isLoading}
+                disabled={isLoading || isInputDisabled}
                 className="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex-shrink-0 disabled:opacity-50 border border-blue-600"
               >
                 전송
