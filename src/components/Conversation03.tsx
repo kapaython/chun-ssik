@@ -23,7 +23,7 @@ const Conversation03: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const caseType = searchParams.get('case');
-  const initialMessage = '💌 미인지 송금 확인 요청\n\n- 페이어카 : 11112222\n- 고객 문의 : 카카오페이로 제 국민은행 계좌로 10만원이 송금되었는데, 저는 송금한적이 없어요. 이거 해킹 된건가요?';
+  const initialMessage = '💌 미인지 송금 확인 요청\n\n- 페이어카 : 11112222\n- 고객 문의 : 2024년 12월 29일 카카오페이로 제 국민은행 계좌로 10만원이 송금되었는데, 저는 송금한적이 없어요. 이거 해킹 된건가요?';
 
   const caseTexts = {
     'transfer': '내용 : 4월 1일 13시에 김응수에게 3건 송금한 기록이 있는데, 저는 이런 송금을 한 기억이 없습니다.\npayId: 1001234',
@@ -189,12 +189,23 @@ const Conversation03: React.FC = () => {
                         />
                       </div>
                     )}
-                    <div className={`rounded-lg p-3 max-w-[80%] ${
-                      message.type === 'user' 
-                        ? 'bg-blue-500 text-white' 
-                        : 'bg-gray-100 text-gray-800'
-                    }`}>
-                      <p className="whitespace-pre-line">{message.content}</p>
+                    <div>
+                      <div className={`rounded-lg p-3 max-w-[80%] ${
+                        message.type === 'user' 
+                          ? 'bg-blue-500 text-white' 
+                          : 'bg-gray-100 text-gray-800'
+                      }`}>
+                        <p className="whitespace-pre-line">{message.content}</p>
+                      </div>
+                      {message.type === 'ai' && 
+                       index === messages.length - 1 && (
+                        <div className="mt-2 ml-1 flex items-center space-x-2">
+                          <p className="text-sm text-gray-600">CS가 해결되었나요?</p>
+                          <button className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm hover:bg-blue-600 transition-colors border border-blue-600">
+                            네
+                          </button>
+                        </div>
+                      )}
                     </div>
                     {message.type === 'user' && (
                       <div className="flex-shrink-0">

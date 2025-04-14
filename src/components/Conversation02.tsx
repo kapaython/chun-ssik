@@ -189,12 +189,23 @@ const Conversation02: React.FC = () => {
                         />
                       </div>
                     )}
-                    <div className={`rounded-lg p-3 max-w-[80%] ${
-                      message.type === 'user' 
-                        ? 'bg-blue-500 text-white' 
-                        : 'bg-gray-100 text-gray-800'
-                    }`}>
-                      <p className="whitespace-pre-line">{message.content}</p>
+                    <div>
+                      <div className={`rounded-lg p-3 max-w-[80%] ${
+                        message.type === 'user' 
+                          ? 'bg-blue-500 text-white' 
+                          : 'bg-gray-100 text-gray-800'
+                      }`}>
+                        <p className="whitespace-pre-line">{message.content}</p>
+                      </div>
+                      {message.type === 'ai' && 
+                       index === messages.length - 1 && (
+                        <div className="mt-2 ml-1 flex items-center space-x-2">
+                          <p className="text-sm text-gray-600">CS가 해결되었나요?</p>
+                          <button className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm hover:bg-blue-600 transition-colors border border-blue-600">
+                            네
+                          </button>
+                        </div>
+                      )}
                     </div>
                     {message.type === 'user' && (
                       <div className="flex-shrink-0">
