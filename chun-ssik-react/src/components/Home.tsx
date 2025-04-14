@@ -27,13 +27,25 @@ const Home: React.FC = () => {
           <p className="font-semibold text-xl my-6">인입된 CS를 확인해볼까요?</p>
         </div>
 
-        {/* 시작 버튼 */}
-        <div>
+        {/* 시작 버튼들 */}
+        <div className="flex flex-col gap-4 items-center">
           <button
-            onClick={() => navigate('/conversation?message=4월 1일 13시에 김응수에게 송금된 거래가 있는데, 저는 그런 송금을 한 기억이 없습니다. (payAccountId: 1001234)')}
-            className="inline-block w-[70%] px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-lg"
+            onClick={() => navigate('/conversation01')}
+            className="w-[70%] px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-lg"
           >
-            CS 확인
+            CS 케이스 1: 의심스러운 송금
+          </button>
+          <button
+            onClick={() => navigate('/conversation02')}
+            className="w-[70%] px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-lg"
+          >
+            CS 케이스 2: 카드 결제 오류
+          </button>
+          <button
+            onClick={() => navigate('/conversation03')}
+            className="w-[70%] px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-lg"
+          >
+            CS 케이스 3: 계좌 이체 실패
           </button>
         </div>
       </div>
