@@ -15,7 +15,7 @@ interface Message {
   content: string;
 }
 
-const Conversation: React.FC = () => {
+const Conversation01: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -224,17 +224,6 @@ const Conversation: React.FC = () => {
           </div>
         </div>
 
-        {/* CS 리포트 버튼 */}
-        {messages.length >= 2 && (
-          <div className="bg-white py-4">
-            <div className="max-w-xl mx-auto px-6">
-              <button className="bg-[#6B7AED] text-white px-4 py-1.5 rounded-full text-sm w-[30%] border border-[#6B7AED]">
-                CS 리포트 확인할래요
-              </button>
-            </div>
-          </div>
-        )}
-
         {/* 프롬프트 입력창 */}
         <div className="bg-white border-t border-gray-200 p-4">
           <div className="max-w-xl mx-auto px-6">
@@ -262,4 +251,4 @@ const Conversation: React.FC = () => {
   );
 };
 
-export default Conversation; 
+export default Conversation01; 

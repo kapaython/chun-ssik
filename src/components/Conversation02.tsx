@@ -143,7 +143,7 @@ const Conversation02: React.FC = () => {
     localStorage.removeItem('chatMessages');
     navigate('/');
   };
- 
+
   return (
     <div className="bg-white h-[100dvh] flex flex-col overflow-hidden">
       {/* 채팅 인터페이스 */}
@@ -185,7 +185,7 @@ const Conversation02: React.FC = () => {
                         <img 
                           src="https://dnvthl1py7y58.cloudfront.net/image.png" 
                           alt="AI 아이콘" 
-                          className="w-8 h-8 object-cover rounded-full"
+                          className="w-8 h-8 object-contain rounded-full"
                         />
                       </div>
                     )}
@@ -211,7 +211,7 @@ const Conversation02: React.FC = () => {
                       <img 
                         src="https://dnvthl1py7y58.cloudfront.net/image.png" 
                         alt="AI 아이콘" 
-                        className="w-8 h-8 object-cover rounded-full"
+                        className="w-8 h-8 object-contain rounded-full"
                       />
                     </div>
                     <div className="bg-gray-100 rounded-lg p-3 max-w-[80%]">
@@ -223,17 +223,6 @@ const Conversation02: React.FC = () => {
             </div>
           </div>
         </div>
-
-        {/* CS 리포트 버튼 */}
-        {messages.length >= 2 && (
-          <div className="bg-white py-4">
-            <div className="max-w-xl mx-auto px-6">
-              <button className="bg-[#6B7AED] text-white px-4 py-1.5 rounded-full text-sm w-[30%] border border-[#6B7AED]">
-                CS 리포트 확인할래요
-              </button>
-            </div>
-          </div>
-        )}
 
         {/* 프롬프트 입력창 */}
         <div className="bg-white border-t border-gray-200 p-4">
