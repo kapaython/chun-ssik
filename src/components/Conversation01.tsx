@@ -73,7 +73,7 @@ const Conversation01: React.FC = () => {
         throw new Error(`API 응답 오류: ${res.status}`);
       }
 
-      const decodedMessage = decodeUnicode(data.message);
+      const decodedMessage = decodeUnicode(data.answer);
       const updatedMessages: Message[] = [...newMessages, { type: 'ai' as const, content: decodedMessage }];
       setMessages(updatedMessages);
       saveMessages(updatedMessages);
@@ -117,7 +117,7 @@ const Conversation01: React.FC = () => {
         throw new Error(`API 응답 오류: ${res.status}`);
       }
 
-      const decodedMessage = decodeUnicode(data.message);
+      const decodedMessage = decodeUnicode(data.answer);
       const updatedMessages: Message[] = [...newMessages, { type: 'ai' as const, content: decodedMessage }];
       setMessages(updatedMessages);
       saveMessages(updatedMessages);
