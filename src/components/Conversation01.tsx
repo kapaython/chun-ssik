@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const API_URL = "https://uxfgyv3e99.execute-api.us-west-2.amazonaws.com/jack-sagemaker/jack-sagemaker";
+const API_URL = "https://uxfgyv3e99.execute-api.us-west-2.amazonaws.com/jack-test-1/jack-test";
 
 // 유니코드 이스케이프 시퀀스를 디코딩하는 함수
 const decodeUnicode = (str: string): string => {
@@ -58,11 +58,11 @@ const Conversation01: React.FC = () => {
 
     setIsLoading(true);
     try {
-      console.log('초기 메시지 API 요청 시작:', { question: initialMessage });
+      console.log('초기 메시지 API 요청 시작:', { input: initialMessage });
       const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: initialMessage })
+        body: JSON.stringify({ input: initialMessage })
       });
 
       console.log('초기 메시지 API 응답 상태:', res.status);
@@ -102,11 +102,11 @@ const Conversation01: React.FC = () => {
 
     setIsLoading(true);
     try {
-      console.log('API 요청 시작:', { question: input.trim() });
+      console.log('API 요청 시작:', { input: input.trim() });
       const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: input.trim() })
+        body: JSON.stringify({ input: input.trim() })
       });
 
       console.log('API 응답 상태:', res.status);
