@@ -21,6 +21,7 @@ const Conversation01: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isCSResolved, setIsCSResolved] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -170,6 +171,7 @@ const Conversation01: React.FC = () => {
       const updatedMessages: Message[] = [...messages, { type: 'ai' as const, content: decodedMessage }];
       setMessages(updatedMessages);
       saveMessages(updatedMessages);
+      setIsCSResolved(true);
     } catch (err: unknown) {
       console.error('CS 리포트 API 호출 중 에러 발생:', err);
       const errorMessage = `⚠️ 에러가 발생했어요: ${err instanceof Error ? err.message : '알 수 없는 에러가 발생했습니다.'}`;
@@ -250,7 +252,7 @@ const Conversation01: React.FC = () => {
                         </div>
                       </div>
                       {message.type === 'ai' && 
-                       index === messages.length - 1 && (
+                       index === messages.length - 1 && !isCSResolved && (
                         <div className="mt-2 ml-1 flex items-center space-x-2">
                           <p className="text-sm text-gray-600">CS가 해결되었나요?</p>
                           <button 
@@ -258,6 +260,17 @@ const Conversation01: React.FC = () => {
                             onClick={handleConfirmClick}
                           >
                             네
+                          </button>
+                        </div>
+                      )}
+                      {message.type === 'ai' && 
+                       index === messages.length - 1 && isCSResolved && (
+                        <div className="mt-2 ml-1 flex items-center space-x-2">
+                          <button 
+                            className="bg-green-500 text-white px-4 py-1 rounded-full text-sm hover:bg-green-600 transition-colors border border-green-600"
+                            disabled
+                          >
+                            CS가 성공적으로 해결됐습니다. 씨익 : )
                           </button>
                         </div>
                       )}
