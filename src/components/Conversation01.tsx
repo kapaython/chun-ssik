@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-const API_URL = "https://uxfgyv3e99.execute-api.us-west-2.amazonaws.com/jack-test-1/jack-test";
+const API_URL = "https://uxfgyv3e99.execute-api.us-west-2.amazonaws.com/cache/cache";
 
 // 유니코드 이스케이프 시퀀스를 디코딩하는 함수
 const decodeUnicode = (str: string): string => {
