@@ -28,14 +28,14 @@ const Home: React.FC = () => {
             <div className="flex justify-between items-center">
               <div className="flex items-start">
                 <div className="ml-2">
-                  <p className="font-semibold text-gray-800 mt-1">내용</p>  
+                  <p className="font-semibold text-gray-800 mt-1">고객 문의 내용</p>  
                   <p className="font-semiboldtext-gray-800 mt-1">2025-02-23 09:38에 김응수에게 1건 송금한 기록이 있는데, 저는 이런 송금을 한 기억이 없습니다.</p>
                   <p className="font-semibold text-gray-600">페이어카 : 10001234</p>
                 </div>
               </div>
               <button
                 onClick={() => navigate('/conversation01')}
-                className="bg-[#6B7AED] text-white px-8 py-2 rounded-full hover:bg-blue-600 transition-colors text-sm flex-shrink-0 ml-4 self-center border border-[#6B7AED]"
+                className="bg-[#FFEB00] text-black px-8 py-2 rounded-full hover:bg-[#FFE44D] transition-colors text-sm flex-shrink-0 ml-4 self-center outline-none focus:outline-none border-0"
               >
                 해결하기
               </button>
