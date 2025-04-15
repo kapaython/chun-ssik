@@ -60,11 +60,12 @@ const Conversation01: React.FC = () => {
 
     setIsLoading(true);
     try {
-      console.log('초기 메시지 API 요청 시작:', { input: initialMessage });
+      const processedMessage = initialMessage.replace(/\n/g, ' ');
+      console.log('초기 메시지 API 요청 시작:', { input: processedMessage });
       const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input: initialMessage })
+        body: JSON.stringify({ input: processedMessage })
       });
 
       console.log('초기 메시지 API 응답 상태:', res.status);
@@ -104,11 +105,12 @@ const Conversation01: React.FC = () => {
 
     setIsLoading(true);
     try {
-      console.log('API 요청 시작:', { input: input.trim() });
+      const processedMessage = input.trim().replace(/\n/g, ' ');
+      console.log('API 요청 시작:', { input: processedMessage });
       const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input: input.trim() })
+        body: JSON.stringify({ input: processedMessage })
       });
 
       console.log('API 응답 상태:', res.status);
