@@ -217,7 +217,7 @@ const Conversation01: React.FC = () => {
                 {messages.map((message, index) => (
                   <div 
                     key={index}
-                    className={`flex items-start ${message.type === 'user' ? 'justify-end' : ''} space-x-2`}
+                    className={`flex items-start ${message.type === 'user' ? 'justify-end' : ''} ${message.type === 'user' ? 'space-x-1' : 'space-x-2'}`}
                   >
                     {message.type === 'ai' && (
                       <div className="flex-shrink-0">
@@ -229,12 +229,12 @@ const Conversation01: React.FC = () => {
                       </div>
                     )}
                     <div>
-                      <div className={`rounded-lg p-3 max-w-[80%] ${
+                      <div className={`rounded-lg p-3 max-w-[90%] ${
                         message.type === 'user' 
-                          ? 'bg-blue-500 text-white' 
+                          ? 'bg-[#FFEB00] text-black' 
                           : 'bg-gray-100 text-gray-800'
                       }`}>
-                        <div className="whitespace-pre-line [&_p]:my-0 [&_ul]:my-0 [&_li]:my-0 [&_a]:text-blue-600 [&_a]:underline [&_code]:bg-gray-50 [&_code]:px-1 [&_code]:rounded [&_code]:text-blue-600 [&_pre]:bg-gray-50 [&_pre]:p-2 [&_pre]:rounded [&_pre]:overflow-auto [&_pre]:max-h-[400px] [&_pre]:max-w-[600px] [&_pre_code]:whitespace-pre [&_pre_code]:text-blue-600 [&_table]:border-collapse [&_table]:max-h-[400px] [&_table]:max-w-[600px] [&_td]:border [&_td]:p-2 [&_th]:border [&_th]:p-2 [&_th]:bg-gray-50 [&_tr]:hover:bg-gray-50 [&_td]:min-w-[100px] [&_th]:min-w-[100px] [&_td]:whitespace-normal [&_th]:whitespace-normal [&_td]:break-words [&_th]:break-words [&_td]:text-gray-900 [&_th]:text-gray-900">
+                        <div className="whitespace-pre-line [&_p]:my-0 [&_ul]:my-0 [&_li]:my-0 [&_a]:text-blue-600 [&_a]:underline [&_code]:bg-gray-50 [&_code]:px-1 [&_code]:rounded [&_code]:text-gray-900 [&_pre]:bg-gray-50 [&_pre]:p-2 [&_pre]:rounded [&_pre]:overflow-auto [&_pre]:max-h-[400px] [&_pre]:max-w-[600px] [&_pre_code]:whitespace-pre [&_pre_code]:text-gray-900 [&_table]:border-collapse [&_table]:max-h-[400px] [&_table]:max-w-[600px] [&_td]:border [&_td]:p-2 [&_th]:border [&_th]:p-2 [&_th]:bg-gray-50 [&_tr]:hover:bg-gray-50 [&_td]:min-w-[100px] [&_th]:min-w-[100px] [&_td]:whitespace-normal [&_th]:whitespace-normal [&_td]:break-words [&_th]:break-words [&_td]:text-gray-900 [&_th]:text-gray-900">
                           <ReactMarkdown 
                             remarkPlugins={[remarkGfm]}
                             components={{
@@ -256,7 +256,7 @@ const Conversation01: React.FC = () => {
                         <div className="mt-2 ml-1 flex items-center space-x-2">
                           <p className="text-sm text-gray-600">CS가 해결되었나요?</p>
                           <button 
-                            className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm hover:bg-blue-600 transition-colors border border-blue-600"
+                            className="bg-[#FFEB00] text-black px-4 py-1 rounded-full text-sm hover:bg-[#FFE44D] transition-colors outline-none focus:outline-none border-0"
                             onClick={handleConfirmClick}
                           >
                             네
@@ -267,7 +267,7 @@ const Conversation01: React.FC = () => {
                        index === messages.length - 1 && isCSResolved && (
                         <div className="mt-2 ml-1 flex items-center space-x-2">
                           <button 
-                            className="bg-green-500 text-white px-4 py-1 rounded-full text-sm hover:bg-green-600 transition-colors border border-green-600"
+                            className="bg-[#FFEB00] text-black px-4 py-1 rounded-full text-sm hover:bg-[#FFE44D] transition-colors outline-none focus:outline-none border-0 disabled:opacity-90"
                             disabled
                           >
                             CS가 성공적으로 해결됐습니다. 씨익 : )
@@ -277,7 +277,7 @@ const Conversation01: React.FC = () => {
                     </div>
                     {message.type === 'user' && (
                       <div className="flex-shrink-0">
-                        <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
+                        <div className="w-8 h-8 rounded-full bg-[#FFEB00] flex items-center justify-center text-black">
                           <span>U</span>
                         </div>
                       </div>
@@ -318,7 +318,7 @@ const Conversation01: React.FC = () => {
               <button
                 onClick={handleSendMessage}
                 disabled={isLoading}
-                className="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex-shrink-0 disabled:opacity-50 border border-blue-600"
+                className="p-3 bg-[#FFEB00] text-black rounded-lg hover:bg-[#FFE44D] transition-colors flex-shrink-0 disabled:opacity-50 outline-none focus:outline-none border-0"
               >
                 전송
               </button>
